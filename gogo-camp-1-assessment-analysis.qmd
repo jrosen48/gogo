@@ -1,0 +1,304 @@
+---
+title: "GoGo Camp #1 Assessment Analysis"
+format: html
+execute:
+  message: false
+  warning: false
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(googlesheets4)
+
+start_1 <- read_sheet("https://docs.google.com/spreadsheets/d/1olSCB0OeuG1Ysqbj-0SYkZnskJkTNhi0BWI8_sONWe0/edit#gid=1481701584", sheet = 1, n_max = 21)
+start_2 <- read_sheet("https://docs.google.com/spreadsheets/d/1olSCB0OeuG1Ysqbj-0SYkZnskJkTNhi0BWI8_sONWe0/edit#gid=1481701584", sheet = 2, n_max = 17)
+start_3 <- read_sheet("https://docs.google.com/spreadsheets/d/1olSCB0OeuG1Ysqbj-0SYkZnskJkTNhi0BWI8_sONWe0/edit#gid=1481701584", sheet = 3, n_max = 18)
+
+end_1 <- read_sheet("https://docs.google.com/spreadsheets/d/1RIBfcVUh5B0wA_jzGHVbPlSezVJWcuCekqWa2zSgnqw/edit#gid=429607552", sheet = 1, n_max = 24)
+end_2 <- read_sheet("https://docs.google.com/spreadsheets/d/1RIBfcVUh5B0wA_jzGHVbPlSezVJWcuCekqWa2zSgnqw/edit#gid=429607552", sheet = 2, n_max = 25)
+end_3 <- read_sheet("https://docs.google.com/spreadsheets/d/1RIBfcVUh5B0wA_jzGHVbPlSezVJWcuCekqWa2zSgnqw/edit#gid=429607552", sheet = 3, n_max = 21)
+
+start_1 <- start_1 %>% janitor::clean_names()
+start_2 <- start_2 %>% janitor::clean_names()
+start_3 <- start_3 %>% janitor::clean_names()
+
+end_1 <- end_1 %>% janitor::clean_names()
+end_2 <- end_2 %>% janitor::clean_names()
+end_3 <- end_3 %>% janitor::clean_names()
+
+start_1 <- start_1 %>% rename(names = to_start_please_enter_your_first_and_last_name_below)
+```
+
+### pseudonyms (not printed)
+
+```{r, echo = FALSE}
+pseudonyms <- c(
+  "Jaime Olaya" = "Jordan",
+  "Evan Chen" = "Liam",
+  "Hazel Jamtsho" = "Grace",
+  "Colin Chen" = "Aiden",
+  "Amberamora Edwards" = "Sophia",
+  "Jacqueline Dutan" = "Isabella",
+  "Davien Martinez" = "Michael",
+  "Ellianne Torivio" = "Olivia",
+  "Andy Lu" = "Lucas",
+  "Rex He" = "Jack",
+  "Samantha Peralta" = "Emma",
+  "Ariana Rojas" = "Mia",
+  "Esteban Ortiz" = "Noah",
+  "Sophie Zhang" = "Ava",
+  "Dominic Del Rosario" = "Ethan",
+  "Ryan Berrios" = "James",
+  "America Cuevas" = "Charlotte",
+  "Alan Chen" = "Benjamin",
+  "Pablo" = "Henry"
+)
+
+pseudonyms["Pablo Cunache"] <- "Henry" # for a small difference
+
+```
+
+```{r}
+start_1 <- start_1 %>% mutate(names = tools::toTitleCase(names))
+
+
+start_1 <- start_1 %>%
+  mutate(names = recode(names,
+                        !!!pseudonyms
+  ))
+```
+
+## Start of camp
+
+### Framing
+
+```{r}
+
+#| fig-cap: "Start of camp, framing"
+
+start_1 <- start_1 %>% 
+  mutate(when_was_the_pokemon_game_first_created = recode(when_was_the_pokemon_game_first_created,
+                                                          "I could use or collect a data set to answer this question." = -1,
+                                                          "I could answer the question without data." = 1,
+                                                          "I'm not sure." = 0,
+                                                          .default = 0
+  ))
+
+start_1 <- start_1 %>% 
+  mutate(what_do_kids_learn_by_playing_pokemon_games = recode(what_do_kids_learn_by_playing_pokemon_games,
+                                                              "I could use or collect a data set to answer this question." = 1,
+                                                              "I could answer the question without data." = -1,
+                                                              "I'm not sure." = 1,
+                                                              .default = 0
+  ))
+
+start_1 <- start_1 %>% 
+  mutate(how_has_the_price_of_the_holographic_charizard_card_changed_since_it_first_came_out = recode(how_has_the_price_of_the_holographic_charizard_card_changed_since_it_first_came_out,
+                                                                                                      "I could use or collect a data set to answer this question." = 1,
+                                                                                                      "I could answer the question without data." = -1,
+                                                                                                      "I'm not sure." = 1,
+                                                                                                      .default = 0
+  ))
+
+start_1 <- start_1 %>% 
+  mutate(is_pikachu_the_most_popular_pokemon = recode(is_pikachu_the_most_popular_pokemon,
+                                                      "I could use or collect a data set to answer this question." = 1,
+                                                      "I could answer the question without data." = -1,
+                                                      "I'm not sure." = 1,
+                                                      .default = 0
+  ))
+
+start_1 %>% select(when_was_the_pokemon_game_first_created:is_pikachu_the_most_popular_pokemon) %>% 
+  gather(key, val) %>% 
+  ggplot(aes(x = val)) + 
+  geom_histogram() +
+  facet_wrap(~key, nrow = 4) +
+  theme_minimal()
+
+```
+
+### Collecting
+
+```{r}
+
+#| fig-cap: "Start of camp, collecting"
+#| 
+start_2 %>% 
+  select(approach_1_if_anyone_gets_sick_its_probably_not_safe:approach_4_place_an_air_quality_sensor_in_each_classroom) %>% 
+  select(-approach_2_ask_the_first_200_students_who_arrive_at_school_if_anything_is_bothering_them) %>% 
+  gather(key, val) %>% 
+  mutate(key = str_sub(key, start = 1, end = 10)) %>% 
+  mutate(key = recode(key,
+                      "approach_1" = "anyone sick",
+                      "approach_3" = "front door",
+                      "approach_4" = "every class"
+  )) %>% 
+  ggplot(aes(x = key, y = val, fill = val)) +
+  geom_col(position = "dodge") +
+  scale_fill_viridis_d("") +
+  theme_minimal()
+```
+
+### Visualizing
+
+```{r}
+
+#| fig-cap: "Start of camp, visualizing"
+#| 
+start_3 %>% 
+  select(table = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_table_above_4,
+         bad_area = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_5,
+         bar = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_6) %>% 
+  mutate(bad_area = recode(bad_area, 
+                           "1" = 5,
+                           "2" = 5,
+                           "3" = 3,
+                           "4" = 2,
+                           "5" = 1)) %>% 
+  gather(key, val) %>% 
+  ggplot(aes(x = val, fill = key)) +
+  geom_histogram() +
+  facet_wrap(~key) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  theme(legend.position = "none")
+```
+
+## End of Camp
+
+### Framing
+
+```{r}
+
+#| fig-cap: "End of camp, framing"
+
+end_1 <- end_1 %>% 
+  slice(-c(1:5))
+
+end_1 <- end_1 %>% rename(names = to_start_please_enter_your_first_and_last_name_below)
+
+end_1 <- end_1 %>% mutate(names = tools::toTitleCase(names))
+
+
+end_1 <- end_1 %>%
+  mutate(names = recode(names,
+                        !!!pseudonyms
+  ))
+
+end_1 <- end_1 %>% select(names, how_many_points_did_each_player_score_in_a_typical_game, who_is_the_team_mascot, which_player_was_the_best_defender_this_season) %>% 
+  mutate(how_many_points_did_each_player_score_in_a_typical_game = recode(how_many_points_did_each_player_score_in_a_typical_game,
+                                                                          "I could use data to answer this question." = 1,
+                                                                          "I could answer the question without data." = -1,
+                                                                          "I'm not sure." = 0,
+                                                                          .default = 0
+  ),
+  who_is_the_team_mascot = recode(who_is_the_team_mascot,
+                                  "I could use data to answer this question." = -1,
+                                  "I could answer the question without data." = 1,
+                                  "I'm not sure." = 0,
+                                  .default = 0
+  ),
+  which_player_was_the_best_defender_this_season = recode(which_player_was_the_best_defender_this_season,
+                                                          "I could use data to answer this question." = 1,
+                                                          "I could answer the question without data." = -1,
+                                                          "I'm not sure." = 0,
+                                                          .default = 0
+  ))
+  
+
+end_1 %>% 
+  select(-names) %>% 
+  gather(key, val) %>% 
+  ggplot(aes(x = val)) + 
+  geom_histogram() +
+  facet_wrap(~key, nrow = 4) +
+  theme_minimal()
+```
+
+### Collecting
+
+```{r}
+
+#| fig-cap: "Start of camp, collecting"
+
+end_2 <- end_2 %>% 
+  slice(-c(1:6))
+
+names(end_2)[7:9] <- str_c("q", 1:3)
+
+# Example list
+lst <- list(1, 2, NULL, 4, 5)
+
+# Replace NULL with NA
+end_2$q2 <- lapply(end_2$q2, function(x) if (is.null(x)) NA else x)
+end_2$q3 <- lapply(end_2$q3, function(x) if (is.null(x)) NA else x)
+
+end_2$q1 <- unlist(end_2$q1)
+end_2$q2 <- unlist(end_2$q2)
+end_2$q3 <- unlist(end_2$q3)
+
+end_2 %>% 
+  select(q1:q3) %>% 
+  rename(anyone = q1, front_door = q2, each_class = q3) %>% 
+  mutate_all(str_sub, end = 2) %>% 
+  mutate_all(as.numeric) %>% 
+  mutate(anyone = recode(anyone,
+                     "1" = 3,
+                     "3" = 1)) %>% 
+  gather(key, val) %>% 
+  ggplot(aes(x = val)) + 
+  geom_histogram() +
+  facet_wrap(~key, nrow = 4) +
+  theme_minimal()
+```
+
+### Visualizing
+
+```{r}
+
+#| fig-cap: "End of camp, visualizing"
+
+end_3 %>% 
+  select(table = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_table_above,
+         bad_area = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_4,
+         bar = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_5) %>% 
+  mutate(bad_area = recode(bad_area, 
+                           "1" = 5,
+                           "2" = 5,
+                           "3" = 3,
+                           "4" = 2,
+                           "5" = 1)) %>% 
+  gather(key, val) %>% 
+  ggplot(aes(x = val, fill = key)) +
+  geom_histogram() +
+  facet_wrap(~key) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  theme(legend.position = "none")
+```
+
+## Comparing Start and End
+
+```{r}
+start_1_means <- start_1 %>% select(names, when_was_the_pokemon_game_first_created:is_pikachu_the_most_popular_pokemon) %>% 
+  gather(key, val, -names) %>% 
+  group_by(names) %>% 
+  summarize(mean_score_start = mean(val, na.rm = TRUE))
+
+end_1_means <- end_1 %>% 
+  gather(key, val, -names) %>% 
+  group_by(names) %>% 
+  summarize(mean_score_end = mean(val, na.rm = TRUE))
+
+start_1_means %>% 
+  left_join(end_1_means) %>% 
+  gather(key, val, -names) %>% 
+  mutate(key = recode(key,
+                      "mean_score_start" = "beginning",
+                      "mean_score_end" = "end")) %>% 
+  ggplot(aes(x = key, y = val, group = names, color = names)) +
+  geom_jitter(width = 0, height = .25) +
+  geom_line() +
+  theme_minimal()
+```
