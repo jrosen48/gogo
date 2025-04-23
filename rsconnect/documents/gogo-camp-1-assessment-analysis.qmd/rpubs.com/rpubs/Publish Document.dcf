@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/1187356/0934adac543a4a6188842184ad930447
+bundleId: https://api.rpubs.com/api/v1/document/1187356/0934adac543a4a6188842184ad930447
+url: http://rpubs.com/jmichaelrosenberg/1187356
+version: 1

@@ -1,0 +1,16 @@
+/*-- scss:defaults --*/
+$presentation-heading-font: "Baloo 2", "Comic Neue", cursive;
+$presentation-heading-color: #ff6f00;   // orange spark
+$body-font-family: "Nunito Sans", sans-serif;
+$link-color: #0066cc;                   // friendly blue
+$code-block-bg: #fff8e1;                // soft yellow for code
+$callout-note-border: #03a9f4;          // bright cyan borders
+
+/*-- scss:rules --*/
+.reveal .slide img {
+  border-radius: 12px;                  // softer images
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+.reveal .slide h1:not(.title) {
+  text-shadow: 2px 2px #ffe082;
+}

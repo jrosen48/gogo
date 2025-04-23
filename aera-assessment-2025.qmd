@@ -1,0 +1,211 @@
+---
+title: "Developing an Assessment of Informal Data Science Learning"
+subtitle: "Two Cycles of Development, Implementation, and Revision"
+author: "Leah Rosenbaum, Joshua Rosenberg, Cody Pritchard, Paulo Blikstein"
+format: revealjs
+# format: pptx
+editor: visual
+theme: solarized
+---
+
+# Welcome and Introduction
+
+![](images/computer-image.jpeg){fig-align="center"}
+
+## Data Learning and Assessment
+
+-   Learning with data is increasingly prominent in the K-12 curriculum
+-   Many states now have data science education courses and pathways
+
+::: notes
+Welcome guests, thank for joining, say will share at the end
+:::
+
+## Assessments are important
+
+-   Formatively and to understand thinking
+-   Summatively to understand what is (not) working---and how
+-   But, assessments of learning with data remain limited
+    -   No widely used assessment
+    -   Related instruments (LOCUS) do not seem to fit our ideas or setting
+
+# Background
+
+![](images/hand%20high.jpeg){fig-align="center"}
+
+## Underlying theoretical frameworks
+
+-   A cycle of investigative *processes* (H. Lee et al., 2021)
+-   *Lenses* (perspectives) on data (V. Lee et al., 2021)
+-   Related statistical *concepts* (Rubin, 2020)
+
+<center>*We focused especially on two constructs: 1) posing questions and 2) gathering data*</center>
+
+## Assessment development approach
+
+*Construct modeling* from Wilson (2023)
+
+![](images/construct-modeling.png){fig-align="center"}
+
+<center>*Starting with a construct definition and an elaboration of the construct (in the construct map), we designed items and scored them across the range of the outcome space*</center>
+
+## Design Considerations
+
+-   This assessment is for an informal learning context
+-   Week-long camps focused on youth learning to pose and answer questions using programmable sensors, *GoGo Boards*
+
+![](images/GoGo-Board-6-w-hands.jpeg){fig-align="center"}
+
+## Design Considerations
+
+-   **Short Duration:** This is for capabilities learners could begin to learn over a week.
+-   **Different Items:** Asking a variety of questions
+-   **Multiple Uses:** Potential for both summative and formative use.
+-   **Relevance:** Ensuring scenarios connect with youth.
+-   **Reflection:** Designing for potential collective reflection.
+
+## Presentation Purpose
+
+-   Share mid-project progress on our assessment development
+-   Detail two major development cycles (Version 1 -\> Version 2) for one of two constructs: *Formulating Questions*
+-   Offer insights and resources for others assessing data science learning - And learning in other STEM contexts, especially emerging domains (e.g., AI education)
+
+# Findings
+
+![](images/IMG_2095.jpeg){fig-align="center" width="597"}
+
+## Version 1 (Camps 1-3)
+
+![](images/collecting outside-01.jpg){fig-align="center"}
+
+## Construct Definition
+
+**Construct Map – Framing Problems**
+
+*Focal Criteria*\
+- **Feasibility** – time, scope, resources, expertise\
+- **Relevance** – personal or sociopolitical value\
+- **Variability** – the answer cannot be found in a reference resource
+
+## Coding Map
+
+| Level | Student demonstrated ability                               |
+|-------|------------------------------------------------------------|
+| 1     | Does not consider any criteria when evaluating a question. |
+| 2     | Evaluates a question based on **one** criterion.           |
+| 3     | Evaluates a question based on **two** criteria.            |
+| 4     | Evaluates a question based on **all three** criteria.      |
+
+## Item
+
+![](images/poke.png){fig-align="center" width="470"}
+
+## Item details
+
+*For each question below, decide whether you could use (or collect) a data set to answer it.*
+
+-   **When was the Pokémon game first created?**
+-   **What do kids learn by playing Pokémon games?**
+-   **How has the price of the holographic Charizard card changed since it first came out?**
+-   **Is Pikachu the most popular Pokémon?**
+
+**If you were going to study the Pokemon universe, what’s a question you could answer by using or collecting a data set?** (open-ended)
+
+## Takeaways from Version 1
+
+-   **Some change**: Some change from beginning to end of camps, but minimal
+-   **Expert Review (V2a):** Refined construct map and items based on expert feedback.
+-   **Revision Rationale:** Based on version 1 findings, shifted primarily to open-ended items requiring explanation.
+
+## Version 2 (Camp 4)
+
+![](images/IMG_2063.jpeg){fig-align="center" width="489"}
+
+## Construct Definition
+
+We consider Formulating Questions to involve three key elements. Students formulate questions exhibiting:
+
+-   **Importance:** Concerns personal, professional, or sociopolitical interests.
+-   **Data-driven:** Involves collecting/analyzing multiple observations/data types to learn about the world.
+-   **Feasibility:** Demonstrates consideration for time, scope, resources, expertise, access, funding.
+
+## Construct Map
+
+-   **Level 0:** Non-response or off-topic.
+-   **Level 1:** Views "data is everywhere"; involves phenomenological/mechanistic questions ("Why do trees fall?").
+-   **Level 2:** Question reflects views of data as any number/quantity, including single facts ("How many miles of track?").
+-   **Level 3:** Question demonstrates the value of data as repeated measures ("How many people at each stop?").
+-   **Level 4:** Question demonstrates the value for modeling/ ("How many people on a typical workday?").
+
+## Item 1
+
+![](images/traffic.png){fig-align="center"}
+
+## Item 2, Part A
+
+Ava is curious about the safety of students walking to school in her neighborhood.\
+She proposes the question: **"How many cars honked at students walking to school today?"**
+
+A good research question for Jake should be relevant, data-driven, and possible. **Write your research question below:**
+
+**Is Ava's question a strong research question based on those criteria?**
+
+-   [ ] Yes
+-   [ ] No
+
+## Item 2, Part B
+
+### If you answered "Yes"
+
+Explain **why** the question "How many cars honked at students walking to school today?" is a strong research question.
+
+### If you answered "No"
+
+Explain **why** the question "How many cars honked at students walking to school today?" is *not* a strong research question.\
+Then suggest a revised question that is relevant, data‑driven, and possible to help Ava investigate the safety of students walking to school.
+
+# Discussion
+
+![](images/clipboard-53529474.png){width="547"}
+
+## Looking Back: Successes
+
+-   Collaborative framework (building on Lee et al.) fostered team alignment on focus.
+-   Adhering to the "Constructing Measures" approach provided valuable structure.
+-   Identifying an effective digital platform for administration and data collection.
+-   Successfully balancing assessment design principles with responsiveness to learners and context.
+
+## Looking Back: Challenges
+
+-   Articulating constructs precisely before having rich student response data.
+-   Developing reliable scoring guides for complex open-ended responses ("bootstrapping" the rubric).
+-   Logistics of scoring large numbers (large *n*) of qualitative responses efficiently.
+-   Determining appropriate rigor ("good enough") for assessment within dynamic informal contexts.
+
+## Looking Forward
+
+-   **Analysis & Validation (V2c):** Collect data from \~100-200 participants (camps, MS/HS classrooms). Analyze for construct validity and inter-rater reliability.
+-   **Dissemination:** Share findings, construct maps, items, process, and validity/reliability evidence via publications, presentations, and open resources.
+-   **Efficiency:** Explore Machine Learning (ML) to support or automate scoring of open-ended responses.
+-   **New Applications:** Investigate assessment use for measuring *teacher* learning in data science
+
+## Potential Future Work
+
+![](images/outdoors.jpeg){fig-align="center"}
+
+-   Adapt assessment for different informal/formal contexts or age groups.
+-   Refine existing items or expand assessment to other data science constructs
+
+## Thank you!
+
+![](images/group.png){fig-align="center"}
+
+**Contact:** jrosenb8@utk.edu
+
+<https://tltlab.org/gogo-board/>
+
+## Acknowledgments
+
+Thank you to campers and their families! Thank you to the NY Hall of Science team and the other members of this project team for their inputs and contributions to this work.
+
+*This material is based upon work supported by the National Science Foundation under Grant No. 2314089. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.*

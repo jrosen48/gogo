@@ -7,14 +7,35 @@ execute:
 editor: visual
 ---
 
+This is our analysis for camp #1.
+
+We have two over-arching goals that would correspond to different analyses:
+
+HIGHEST LEVEL GOAL - 
+
+Leah works on framing, Cody works on collecting, Josh works on visualizing, with achieving this goal top of mind:
+
+1. Understand the response patterns to gauge how well the items are working in terms of our goal of understanding youth learning:
+- Descriptives, in aggregate, pre-post:
+- Recode the data
+- Have clear labels for what the different response options mean
+- Keep the same scale, but have clear labels
+
+---
+
+2. Understand changes in learning that can be attributed to the camp
+- In aggregate (i.e., sum or mean or other summary statistic), pre-post, may want to share some measure of variation (SD, SE, individual student data) around the aggregate statistic
+
 ```{r}
-library(tidyverse)
-library(googlesheets4)
+library(tidyverse) # install.packages("tidyverse")
+library(googlesheets4) # install.packages("googlesheets4")
 
 start_1 <- read_sheet("https://docs.google.com/spreadsheets/d/1olSCB0OeuG1Ysqbj-0SYkZnskJkTNhi0BWI8_sONWe0/edit#gid=1481701584", sheet = 1, n_max = 21)
 start_2 <- read_sheet("https://docs.google.com/spreadsheets/d/1olSCB0OeuG1Ysqbj-0SYkZnskJkTNhi0BWI8_sONWe0/edit#gid=1481701584", sheet = 2, n_max = 17)
 start_3 <- read_sheet("https://docs.google.com/spreadsheets/d/1olSCB0OeuG1Ysqbj-0SYkZnskJkTNhi0BWI8_sONWe0/edit#gid=1481701584", sheet = 3, n_max = 18)
 
+pseudonyms <- read_sheet("https://docs.google.com/spreadsheets/d/1UAXIhQFD_JYTWKuC9mZrLGmfBCNYRpcpkmIkZIrheIM/edit#gid=0")
+  
 end_1 <- read_sheet("https://docs.google.com/spreadsheets/d/1RIBfcVUh5B0wA_jzGHVbPlSezVJWcuCekqWa2zSgnqw/edit#gid=429607552", sheet = 1, n_max = 24)
 end_2 <- read_sheet("https://docs.google.com/spreadsheets/d/1RIBfcVUh5B0wA_jzGHVbPlSezVJWcuCekqWa2zSgnqw/edit#gid=429607552", sheet = 2, n_max = 25)
 end_3 <- read_sheet("https://docs.google.com/spreadsheets/d/1RIBfcVUh5B0wA_jzGHVbPlSezVJWcuCekqWa2zSgnqw/edit#gid=429607552", sheet = 3, n_max = 21)
@@ -27,10 +48,9 @@ end_1 <- end_1 %>% janitor::clean_names()
 end_2 <- end_2 %>% janitor::clean_names()
 end_3 <- end_3 %>% janitor::clean_names()
 
-start_1 <- start_1 %>% rename(names = to_start_please_enter_your_first_and_last_name_below)
 ```
 
-### pseudonyms (not printed)
+## pseudonyms (not printed)
 
 ```{r, echo = FALSE}
 pseudonyms <- c(
@@ -56,12 +76,12 @@ pseudonyms <- c(
 )
 
 pseudonyms["Pablo Cunache"] <- "Henry" # for a small difference
-
 ```
 
 ```{r}
-start_1 <- start_1 %>% mutate(names = tools::toTitleCase(names))
+start_1 <- start_1 %>% rename(names = to_start_please_enter_your_first_and_last_name_below)
 
+start_1 <- start_1 %>% mutate(names = tools::toTitleCase(names))
 
 start_1 <- start_1 %>%
   mutate(names = recode(names,
@@ -69,7 +89,19 @@ start_1 <- start_1 %>%
   ))
 ```
 
-## Start of camp
+## Campers (n's at diff. time points)
+
+pre
+- 1
+- 2
+- 3
+
+post 
+- 1 
+- 2
+- 3
+
+## Start of Camp Descriptives
 
 ### Framing
 
@@ -114,7 +146,8 @@ start_1 %>% select(when_was_the_pokemon_game_first_created:is_pikachu_the_most_p
   ggplot(aes(x = val)) + 
   geom_histogram() +
   facet_wrap(~key, nrow = 4) +
-  theme_minimal()
+  theme_minimal() +
+  labs(subtitle = "1 = I could use data; 0 = not sure; -1 = I could not use data")
 
 ```
 
@@ -125,7 +158,7 @@ start_1 %>% select(when_was_the_pokemon_game_first_created:is_pikachu_the_most_p
 #| fig-cap: "Start of camp, collecting"
 #| 
 start_2 %>% 
-  select(approach_1_if_anyone_gets_sick_its_probably_not_safe:approach_4_place_an_air_quality_sensor_in_each_classroom) %>% 
+select(approach_1_if_anyone_gets_sick_its_probably_not_safe:approach_4_place_an_air_quality_sensor_in_each_classroom) %>% 
   select(-approach_2_ask_the_first_200_students_who_arrive_at_school_if_anything_is_bothering_them) %>% 
   gather(key, val) %>% 
   mutate(key = str_sub(key, start = 1, end = 10)) %>% 
@@ -145,7 +178,7 @@ start_2 %>%
 ```{r}
 
 #| fig-cap: "Start of camp, visualizing"
-#| 
+
 start_3 %>% 
   select(table = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_table_above_4,
          bad_area = how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_5,
@@ -162,10 +195,12 @@ start_3 %>%
   facet_wrap(~key) +
   theme_minimal() +
   scale_fill_viridis_d() +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  labs(subtitle = "Scale is from 1 (very hard) to 5 (very easy)",
+       caption = "The first pane, bad_area is reverse-coded, such that the values of 5 were originally 'very hard', and 1 were 'very easy'")
 ```
 
-## End of Camp
+## End of Camp Descriptives
 
 ### Framing
 
@@ -205,7 +240,7 @@ end_1 <- end_1 %>% select(names, how_many_points_did_each_player_score_in_a_typi
                                                           "I'm not sure." = 0,
                                                           .default = 0
   ))
-  
+
 
 end_1 %>% 
   select(-names) %>% 
@@ -220,7 +255,7 @@ end_1 %>%
 
 ```{r}
 
-#| fig-cap: "Start of camp, collecting"
+#| fig-cap: "End of camp, collecting"
 
 end_2 <- end_2 %>% 
   slice(-c(1:6))
@@ -244,13 +279,14 @@ end_2 %>%
   mutate_all(str_sub, end = 2) %>% 
   mutate_all(as.numeric) %>% 
   mutate(anyone = recode(anyone,
-                     "1" = 3,
-                     "3" = 1)) %>% 
+                         "1" = 3,
+                         "3" = 1)) %>% 
   gather(key, val) %>% 
   ggplot(aes(x = val)) + 
   geom_histogram() +
   facet_wrap(~key, nrow = 4) +
-  theme_minimal()
+  theme_minimal() +
+  labs(caption = "1 = worst, 3 = best; 'anyone' reverse coded")
 ```
 
 ### Visualizing
@@ -275,14 +311,20 @@ end_3 %>%
   facet_wrap(~key) +
   theme_minimal() +
   scale_fill_viridis_d() +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  labs(subtitle = "Scale is from 1 (very hard) to 5 (very easy)",
+       caption = "The first pane, bad_area is reverse-coded, such that the values of 5 were originally 'very hard', and 1 were 'very easy'")
 ```
 
-## Comparing Start and End
+## Pre-Post
+
+### Framing
 
 ```{r}
+#| fig-cap: "Pre-post change, framing"
+#| 
 start_1_means <- start_1 %>% select(names, when_was_the_pokemon_game_first_created:is_pikachu_the_most_popular_pokemon) %>% 
-  gather(key, val, -names) %>% 
+gather(key, val, -names) %>% 
   group_by(names) %>% 
   summarize(mean_score_start = mean(val, na.rm = TRUE))
 
@@ -298,7 +340,106 @@ start_1_means %>%
                       "mean_score_start" = "beginning",
                       "mean_score_end" = "end")) %>% 
   ggplot(aes(x = key, y = val, group = names, color = names)) +
-  geom_jitter(width = 0, height = .25) +
+  geom_point() +
   geom_line() +
-  theme_minimal()
+  theme_minimal() +
+  facet_wrap(~names)
+
+start_1_means %>% 
+  left_join(end_1_means) %>% 
+  gather(key, val, -names) %>% 
+  mutate(key = recode(key,
+                      "mean_score_start" = 1,
+                      "mean_score_end" = 2)) %>% 
+  ggplot(aes(x = key, y = val)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_point() + 
+  theme_minimal() +
+  ylab("Mean Score (-1 - 1)")
+```
+
+### Gathering (not examined)
+
+```{r}
+start_2 <- start_2 %>% rename(names = please_enter_your_name_or_nickname)
+
+start_2 <- start_2 %>% mutate(names = tools::toTitleCase(names))
+
+```
+
+```{r, echo = FALSE}
+# Create a named vector for pseudonyms
+pseudonyms_two <- c(
+  "Colin Chen" = "Alex Smith", 
+  "Gamer" = "Jamie Brown", 
+  "Evan Chen" = "Taylor Johnson", 
+  "Hazel" = "Casey Lee", 
+  "Rex Hee" = "Jordan White", 
+  "Jacquie" = "Morgan Green", 
+  "Davien Martinez" = "Avery Hall", 
+  "Amberamora (Pronounced: Amber-Amora)" = "Riley Adams", 
+  "Sophie" = "Charlie Davis", 
+  "Ryan Berrios" = "Peyton Clark", 
+  "Andy Lu" = "Cameron Lewis", 
+  "Ellianne Torivio" = "Quinn Walker", 
+  "Ariana" = "Reese Robinson", 
+  "Sam" = "Harper King", 
+  "Alan Chen" = "Dylan Wright", 
+  "Dominic" = "Rowan Scott", 
+  "Esteban Ortiz" = "Hayden Morgan",
+  "Amberamora Edwards" = "Riley Adams",
+  "Ariana Rojas" = "Reese Robinson",
+  "Hazel Jamtsho" = "Casey Lee",
+  "Samantha" = "Harper King",
+  "Andy" = "Cameron Lewis",
+  "EllianneTorivio" = "Quinn Walker",
+  "Rex" = "Jordan White",
+  "Pablo" = "Blake Harris",
+  "America" = "Skyler Thompson"
+)
+```
+
+```{r}
+end_2 <- end_2 %>% rename(names = please_enter_your_name_or_nickname)
+
+end_2 <- end_2 %>% mutate(names = tools::toTitleCase(names))
+```
+
+```{r}
+start_2 <- start_2 %>%
+  mutate(names = recode(names,
+                        !!!pseudonyms_two
+  ))
+
+end_2 <- end_2 %>%
+  mutate(names = recode(names,
+                        !!!pseudonyms_two
+  ))
+```
+
+### Visualizing
+
+```{r}
+start_3_sub <- start_3 %>% select(names = please_enter_your_name_or_nickname,
+                   how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_table_above_3,
+                   how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_table_above_4,
+                   how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_5,
+                   how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_6)
+
+# Create pseudonyms
+start_3_sub <- start_3_sub %>%
+  mutate(pseudonym = case_when(
+    names == "Colin Chen" ~ "Colin",
+    names == "Ariana" ~ "Ariana Rojas",
+    TRUE ~ names
+  ))
+
+
+end_3_sub <- end_3 %>% select(names = please_enter_your_name_or_nickname,
+                 how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_table_above,
+                 how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_4,
+                 how_hard_would_it_be_to_find_the_month_with_the_most_birthdays_using_the_chart_above_5)
+
+# start_3_sub$names %>% clipr::write_clip()
+# end_3_sub$names %>% clipr::write_clip()
 ```
