@@ -1,7 +1,7 @@
 ---
 title: "Developing an Assessment of Informal Data Science Learning"
 subtitle: "Two Cycles of Development, Implementation, and Revision"
-author: "Leah Rosenbaum, Joshua Rosenberg, Cody Pritchard, Paulo Blikstein"
+author: "Leah Rosenbaum (Teachers College, Columbia), Joshua Rosenberg (University of Tennessee, Knoxville), Cody Pritchard (University of Tennessee, Knoxville), and Paulo Blikstein (Teachers College, Columbia)"
 format: revealjs
 # format: pptx
 editor: visual
@@ -31,7 +31,7 @@ Welcome guests, thank for joining, say will share at the end
 
 # Background
 
-![](images/hand%20high.jpeg){fig-align="center"}
+![](images/hand-high.jpeg){fig-align="center"}
 
 ## Underlying theoretical frameworks
 

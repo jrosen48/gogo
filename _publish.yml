@@ -1,0 +1,4 @@
+- source: aera-assessment-2025.qmd
+  quarto-pub:
+    - id: 05e81529-7f7d-4320-90f3-a5698670cfde
+      url: https://jrosenberg.quarto.pub/gogo-assessment
